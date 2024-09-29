@@ -60,7 +60,7 @@ namespace DocPlanner.SlotsApp.Domain
         {
             if (!workPeriods.ContainsKey(isoDayOfWeek))
             {
-                throw new InvalidSlotException("OccupiedSlot must be within a work period.");
+                throw new InvalidSlotException("There's no workperiod for requested day of week.");
             }
         }
 

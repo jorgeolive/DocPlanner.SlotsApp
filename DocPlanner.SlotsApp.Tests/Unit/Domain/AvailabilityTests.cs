@@ -62,6 +62,26 @@ public class AvailabilityTests
         availability.Appointments.Should().Contain(new[] { slot1, slot2, slot3 });
     }
 
+
+    [Fact]
+    public void CantAddAppointment_OnWeekDay_WithNoWorkperiod()
+    {
+        // Arrange
+        var workPeriods = new List<WorkPeriod>
+        {
+            WorkPeriod.Create(IsoDayOfWeek.Thursday, 9, 17, 12, 13)
+        };
+
+        var monday9thSept = new LocalDate(2024, 9, 23);
+
+        var availability = new Availability { Facility = aFacility, SlotDurationMinutes = 60, WorkPeriods = workPeriods };
+
+
+        Action tryAddAppointmentOnWednesday = () => availability.AddAppointment(new Appointment(monday9thSept, new LocalTime(9,0), new LocalTime(10,0), "This hurts"!) { Patient = aPatient });
+
+        tryAddAppointmentOnWednesday.Should().Throw<InvalidSlotException>().WithMessage("There's no workperiod for requested day of week.");
+    }
+    
     [Fact]
     public void CantCreateAvailability_WithDuplicateDaysOfWeek()
     {
