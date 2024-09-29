@@ -10,7 +10,7 @@ public class AvailabilityTests
     private static readonly Facility aFacility = new() { Address = "Address", Name = "Facility" };
 
     [Fact]
-    public void CanAddMultipleNonOverlappingAppointments()
+    public void CanAddMultipleNonOverlappingConsecutiveAppointments()
     {
         // Arrange
         var workPeriods = new List<WorkPeriod>
